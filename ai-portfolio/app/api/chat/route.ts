@@ -3,7 +3,11 @@ import OpenAI from "openai";
 import { profile } from "@/data/profile";
 
 const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.YA_API_KEY,
+	baseURL: process.env.AGENT_URL,
+	defaultHeaders: {
+		'OpenAI-Project': process.env.AGENT_ID
+	}
 });
 
 const allowedKeywords = [
@@ -61,32 +65,19 @@ export async function POST(request: Request) {
     const context = JSON.stringify(profile, null, 2);
 
     const response = await client.responses.create({
-      model: "gpt-5.5",
-      instructions: `
-Ты — AI-помощник на персональном сайте кандидата.
-
-Твоя задача — отвечать только на вопросы о кандидате, его опыте, проектах, навыках, технологиях, релевантности вакансии и контактах.
-
-Используй только информацию из предоставленного контекста.
-
-Если в контексте нет ответа, честно скажи:
-"В моей базе знаний об этом нет информации."
-
-Если вопрос не связан с кандидатом, портфолио, проектами, опытом, технологиями или вакансией, ответь:
-"Я могу отвечать только на вопросы о кандидате, его опыте и проектах."
-
-Не выдумывай опыт, компании, проекты, метрики или технологии.
-Не отвечай на общие вопросы, не связанные с кандидатом.
-Отвечай кратко, понятно и уверенно.
-      `,
+      prompt: {
+        id: 'fvt9fcm10n88dhtbgqc9'
+      },
       input: `
-Контекст о кандидате:
-${context}
+      Контекст о кандидате:
+      ${context}
 
-Вопрос пользователя:
-${message}
+      Вопрос пользователя:
+      ${message}
       `,
     });
+
+    console.log(response.output_text);
 
     return NextResponse.json({
       answer: response.output_text,

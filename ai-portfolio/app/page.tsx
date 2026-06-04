@@ -6,8 +6,8 @@ const suggestedQuestions = [
   "Почему кандидат подходит под AI-вакансию?",
   "Какие проекты у кандидата самые релевантные?",
   "С каким стеком он работал?",
-  "Расскажи про AI Portfolio Assistant",
-  "Какие задачи он может закрывать в команде?",
+  "Расскажи об образовании кандидата.",
+  "Какие задачи кандидат может закрывать в команде?",
 ];
 
 export default function Home() {
@@ -55,7 +55,7 @@ export default function Home() {
 
         <p className="mb-10 max-w-2xl text-lg text-neutral-300">
           Помощник отвечает на вопросы о моём опыте, проектах, навыках,
-          технологиях и релевантности AI-вакансии.
+          технологиях.
         </p>
 
         <div className="w-full rounded-3xl border border-neutral-800 bg-neutral-900 p-4 shadow-2xl">
@@ -66,7 +66,7 @@ export default function Home() {
               onKeyDown={(event) => {
                 if (event.key === "Enter") askAssistant();
               }}
-              placeholder="Например: почему ты подходишь под эту вакансию?"
+              placeholder="Какой самый большой опыт?"
               className="flex-1 rounded-2xl border border-neutral-700 bg-neutral-950 px-5 py-4 text-white outline-none placeholder:text-neutral-500 focus:border-neutral-400"
             />
 
